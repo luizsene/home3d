@@ -1,0 +1,20 @@
+{
+  "domain": "home3d",
+  "name": "Home3D",
+  "version": "1.0.0",
+  "integration_type": "service",
+  "config_flow": true,
+  "requirements": [],
+  "dependencies": [
+    "panel_custom"
+  ],
+  "after_dependencies": [
+    "frontend"
+  ],
+  "codeowners": [
+    "@luizsene"
+  ],
+  "documentation": "https://github.com/luizsene/casa3d",
+  "issue_tracker": "https://github.com/luizsene/casa3d/issues",
+  "iot_class": "local_push"
+}

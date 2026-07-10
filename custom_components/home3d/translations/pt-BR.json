@@ -1,0 +1,24 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Home3D",
+        "description": "Estrutura inicial. Nenhum campo de configuracao disponivel ainda."
+      }
+    },
+    "abort": {
+      "not_implemented": "Home3D esta na fase apenas de arquitetura."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Seguranca",
+        "description": "Defina a senha de administrador exigida para habilitar o modo de edicao no painel Home3D.",
+        "data": {
+          "admin_password": "Senha de administrador"
+        }
+      }
+    }
+  }
+}

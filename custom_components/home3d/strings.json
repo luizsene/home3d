@@ -1,0 +1,24 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Home3D",
+        "description": "Initial scaffold. No setup fields available yet."
+      }
+    },
+    "abort": {
+      "not_implemented": "Home3D is currently in architecture-only stage."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Security",
+        "description": "Set the administrator password required to enable edit mode in Home3D panel.",
+        "data": {
+          "admin_password": "Administrator password"
+        }
+      }
+    }
+  }
+}
