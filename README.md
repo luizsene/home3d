@@ -1,184 +1,517 @@
-# Home3D
+# Home3D for Home Assistant
 
-Home3D is a long-term open source platform for 3D visualization and automation workflows on top of Home Assistant.
+<p align="center">
 
-Sprint 1 establishes a professional Nx workspace foundation with strict architectural boundaries and interface-first modules.
+Interactive 3D Digital Twin for Home Assistant
+
+Visualize, monitor and control your entire smart home through a real-time 3D environment.
+
+</p>
+
+---
 
 ## Overview
 
-- Monorepo powered by Nx + PNPM.
-- React 19 + Vite viewer application.
-- TypeScript-first module ecosystem.
-- Home Assistant custom component preserved as a separated runtime boundary.
-- Build pipeline prepared for future HACS publication flow.
+Home3D transforms Home Assistant into a real-time digital twin of your home.
 
-## Architecture
+Instead of navigating through dashboards full of cards, Home3D allows your entire house to become the user interface.
 
-- apps/viewer: UI, Three.js rendering, GLB loading, camera controls.
-- apps/documentation: documentation app boundary.
-- libs/*: domain and technical contracts split by responsibility.
-- custom_components/home3d: Home Assistant integration runtime.
+Every room, device, light, sensor, switch and automation can be represented inside a fully interactive 3D model synchronized with Home Assistant in real time.
 
-Detailed docs:
+This repository contains only the Home Assistant integration distributed through HACS.
 
-- docs/architecture.md
-- docs/folder-structure.md
-- docs/development.md
-- docs/coding-guidelines.md
-- docs/nx-workspace.md
-- docs/build-pipeline.md
-- docs/roadmap.md
+The complete development workspace is available at:
 
-## Structure
+https://github.com/luizsene/casa3d
 
-```text
-homeassistant-home3d/
-	apps/
-		viewer/
-		documentation/
-	libs/
-		core/
-		sdk/
-		common/
-		testing/
-		ui/
-		heatmap/
-		renderer/
-		state/
-		devices/
-		cameras/
-		automation/
-		strategies/
-	custom_components/
-		home3d/
-	blender/
-	docs/
-	examples/
-	scripts/
-	tools/
-	.github/
-	nx.json
-	package.json
-	pnpm-workspace.yaml
-	tsconfig.base.json
-	README.md
+---
+
+## Vision
+
+Home3D is not intended to be "just another dashboard."
+
+The long-term goal is to create a complete visual layer for Home Assistant where your home itself becomes the interface.
+
+Imagine being able to:
+
+• Click a lamp inside the 3D model to turn it on.
+
+• Watch temperature change in each room.
+
+• Visualize power consumption as a heat map.
+
+• Display live camera feeds directly inside the scene.
+
+• Monitor doors, windows and alarms in real time.
+
+• Simulate automations before enabling them.
+
+• Navigate through floors as if walking inside your home.
+
+Home3D aims to become the Digital Twin of your smart home.
+
+---
+
+# Features
+
+## Current
+
+✔ Native Home Assistant Integration
+
+✔ Sidebar Panel
+
+✔ Configuration Flow
+
+✔ GLB Model Support
+
+✔ Interactive 3D Viewer
+
+✔ Entity Binding System
+
+✔ Local Asset Hosting
+
+✔ Home Assistant WebSocket Integration
+
+✔ Room Management
+
+✔ Persistent Binding Storage
+
+---
+
+## Planned
+
+• Heat Maps
+
+• Energy Visualization
+
+• Temperature Overlay
+
+• Humidity Overlay
+
+• Lighting Effects
+
+• Camera Integration
+
+• Automation Visualization
+
+• Device Animations
+
+• AI Assisted Mapping
+
+• Multi-floor Navigation
+
+• VR Support
+
+• Scene Templates
+
+• Floor Planner Import
+
+• Sweet Home 3D Import
+
+---
+
+# Screens
+
+Future releases will include:
+
+- Interactive house visualization
+
+- Device overlays
+
+- Camera integration
+
+- Energy heat maps
+
+- Automation editor
+
+- Multi-floor navigation
+
+---
+
+# Installation
+
+## Install using HACS
+
+1. Open HACS.
+
+2. Integrations.
+
+3. Search for:
+
+```
+Home3D
 ```
 
-## How to run
+4. Install.
 
-1. Install dependencies:
+5. Restart Home Assistant.
 
-```bash
-pnpm install
+---
+
+## Manual Installation
+
+Copy
+
+```
+custom_components/home3d
 ```
 
-2. Run viewer locally:
+into
 
-```bash
-pnpm nx run viewer:serve
+```
+config/custom_components/
 ```
 
-3. Build viewer:
+Restart Home Assistant.
 
-```bash
-pnpm nx run viewer:build
-```
+Then add the integration from:
 
-4. Generate dependency graph:
+Settings
 
-```bash
-pnpm nx graph
-```
+↓
 
-## Build and delivery flow
+Devices & Services
 
-Target pipeline (structure defined in Sprint 1):
+↓
 
-1. Nx Build
-2. Viewer output in apps/viewer/dist
-3. Scripts boundary
-4. Copy boundary
-5. custom_components/home3d/www
+Add Integration
 
-Current copy script entrypoint:
+↓
 
-- scripts/copy-homeassistant.ts
+Home3D
 
-## HACS distribution
+---
 
-Source monorepo (development):
+# First Setup
 
-- https://github.com/luizsene/casa3d
+After installing the integration:
 
-Distribution repository (HACS runtime only):
+1. Open Home3D from the sidebar.
 
-- https://github.com/luizsene/home3d
+2. Enable Configuration Mode.
 
-The distribution workflow publishes only the required runtime files:
+3. Upload your GLB model.
 
-- hacs.json
-- custom_components/home3d
-- README.md
-- LICENSE
+4. Create rooms.
 
-Workflow file:
+5. Select objects inside the model.
 
-- .github/workflows/publish-hacs-distribution.yml
+6. Link each object to Home Assistant entities.
 
-Repository configuration required in the source repository:
+7. Save.
 
-1. Secret HACS_DISTRIBUTION_TOKEN with write access to https://github.com/luizsene/home3d.
-2. Optional variable HACS_DISTRIBUTION_REPO (default is luizsene/home3d).
-3. Optional variable HACS_DISTRIBUTION_BRANCH (default is main).
+The configuration is stored automatically by the integration.
 
-Local command to validate package generation before publishing:
+No YAML configuration is required.
 
-```bash
-pnpm run prepare:hacs-dist -- --out .release/hacs-dist
-```
+---
 
-Publication triggers:
+# Entity Binding
 
-1. Manual run via workflow_dispatch.
-2. Automatic run when a GitHub Release is published.
+The Entity Binding System is the core of Home3D.
 
-## Contributing
+Every object inside the 3D scene can be connected to one or multiple Home Assistant entities.
 
-1. Follow SOLID and Clean Architecture.
-2. Keep modules cohesive and decoupled.
-3. Add interfaces before concrete implementations.
-4. Keep business logic out of presentational components.
-5. Validate lint, tests and build before opening PR.
+Examples
 
-## Roadmap
+Living Room Lamp
 
-- Sprint 1: Workspace
-- Sprint 2: Panel Registration
-- Sprint 3: Frontend Bridge
-- Sprint 4: SDK
-- Sprint 5: State Store
-- Sprint 6: Entity Manager
-- Sprint 7: Scene Sync
-- Sprint 8: HeatMap
-- Sprint 9: Camera Manager
-- Sprint 10: Automation Layer
-- Sprint 11: Performance
-- Sprint 12: Publicacao HACS
+↓
 
-## Technologies
+light.living_room
+
+Bedroom Temperature
+
+↓
+
+sensor.bedroom_temperature
+
+Garage Door
+
+↓
+
+cover.garage
+
+Bedroom Air Conditioner
+
+↓
+
+climate.bedroom
+
+Energy Consumption
+
+↓
+
+sensor.house_energy
+
+Door Sensor
+
+↓
+
+binary_sensor.front_door
+
+Once linked, the object automatically reflects the current Home Assistant state.
+
+---
+
+# Supported Entity Domains
+
+Current support includes:
+
+- Light
+
+- Switch
+
+- Fan
+
+- Cover
+
+- Sensor
+
+- Binary Sensor
+
+- Climate
+
+- Media Player
+
+- Camera
+
+Additional domains will be added over time.
+
+---
+
+# Configuration Mode
+
+Configuration Mode allows users to build the relationship between the 3D model and Home Assistant.
+
+Current capabilities
+
+• Create rooms
+
+• Rename rooms
+
+• Upload GLB models
+
+• Link entities
+
+• Remove links
+
+• Save configuration
+
+Future versions will also support:
+
+• Drag & Drop editing
+
+• Object properties
+
+• Color customization
+
+• Animations
+
+• Visibility rules
+
+• Device templates
+
+---
+
+# 3D Model Support
+
+Current supported format
+
+✔ GLB
+
+Recommended workflow
+
+Blender
+
+↓
+
+Export GLB
+
+↓
+
+Upload into Home3D
+
+↓
+
+Bind entities
+
+↓
+
+Done
+
+Future versions will support importing models from:
+
+• Sweet Home 3D
+
+• Floor Planner
+
+• SketchUp
+
+• Revit
+
+---
+
+# Home Assistant Integration
+
+The integration uses native Home Assistant APIs.
+
+Current communication layers
+
+• Configuration Flow
+
+• WebSocket API
+
+• Service Calls
+
+• Entity Registry
+
+• Device Registry
+
+• Area Registry
+
+• Event Bus
+
+• Diagnostics
+
+• Static Asset Hosting
+
+Rendering is entirely client-side.
+
+This keeps Home Assistant lightweight while allowing complex 3D scenes.
+
+---
+
+# Architecture
+
+The Home Assistant integration is intentionally lightweight.
+
+Its responsibilities are:
+
+• Register the sidebar panel
+
+• Store configuration
+
+• Provide WebSocket endpoints
+
+• Serve static assets
+
+• Manage entity bindings
+
+• Register services
+
+• Diagnostics
+
+The 3D engine runs completely in the browser.
+
+---
+
+# Performance
+
+Designed to run on:
+
+✔ Home Assistant OS
+
+✔ Home Assistant Container
+
+✔ Home Assistant Supervised
+
+✔ Home Assistant Green
+
+✔ Home Assistant Yellow
+
+✔ Raspberry Pi
+
+Rendering is GPU accelerated using WebGL.
+
+The Home Assistant server only handles synchronization.
+
+---
+
+# Roadmap
+
+## Phase 1
+
+Workspace
+
+Viewer
+
+Home Assistant Integration
+
+Entity Binding
+
+Configuration Mode
+
+---
+
+## Phase 2
+
+Scene Synchronization
+
+Camera Manager
+
+Device Manager
+
+Heat Maps
+
+Energy Overlay
+
+Temperature Overlay
+
+---
+
+## Phase 3
+
+Automation Designer
+
+AI Assistant
+
+Voice Interaction
+
+Digital Twin Simulation
+
+Scene Templates
+
+Multi-floor Navigation
+
+---
+
+## Development
+
+This repository contains only the Home Assistant runtime.
+
+The complete development workspace is available at:
+
+https://github.com/luizsene/casa3d
+
+Development follows:
+
+- SOLID
+
+- Clean Architecture
+
+- Interface-first Design
 
 - Nx Workspace
-- PNPM
+
 - TypeScript
-- React 19
-- Vite
-- Python 3.13
-- Home Assistant Custom Components
-- ESLint
-- Prettier
-- Husky
-- lint-staged
 
-## License
+- React
 
-MIT. See LICENSE.
+---
+
+# Contributing
+
+Contributions are welcome.
+
+Bug reports, feature requests and pull requests should be opened in the development repository.
+
+https://github.com/luizsene/casa3d
+
+---
+
+# License
+
+MIT License
+
+See LICENSE for details.
