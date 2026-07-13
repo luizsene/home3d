@@ -12109,7 +12109,11 @@ class or {
     }).catch(async (a) => {
       if (!this.isRecoverableUpdateError(a))
         throw a;
-      return this.logger.warn("Binding", "update_binding failed, falling back to save_binding_config", a), this.haClient.send({
+      return this.logger.warn(
+        "Binding",
+        "update_binding failed, falling back to save_binding_config",
+        a
+      ), this.haClient.send({
         type: Ey,
         model_file: this.activeModelFile,
         object_id: this.normalizeObjectId(e),
@@ -12132,7 +12136,11 @@ class or {
     }).catch(async (a) => {
       if (!this.isRecoverableUpdateError(a))
         throw a;
-      return this.logger.warn("Binding", "update_binding failed, falling back to save_binding_config", a), this.haClient.send({
+      return this.logger.warn(
+        "Binding",
+        "update_binding failed, falling back to save_binding_config",
+        a
+      ), this.haClient.send({
         type: Ey,
         model_file: this.activeModelFile,
         object_id: this.normalizeObjectId(e),
@@ -12152,7 +12160,10 @@ class or {
     }).catch(async (n) => {
       if (!this.isUnknownCommandError(n))
         throw n;
-      this.logger.warn("Binding", "save_bindings unavailable, saving per entry with save_binding_config");
+      this.logger.warn(
+        "Binding",
+        "save_bindings unavailable, saving per entry with save_binding_config"
+      );
       let i = this.document;
       for (const [a, c] of Object.entries(e.bindings))
         i = await this.haClient.send({
@@ -12202,7 +12213,11 @@ class or {
         throw new Error(a.message || `HTTP import failed (${i.status})`);
       }
     } catch (i) {
-      this.logger.warn("Binding", "HTTP multi-model import failed, falling back to websocket", i), await this.haClient.send({
+      this.logger.warn(
+        "Binding",
+        "HTTP multi-model import failed, falling back to websocket",
+        i
+      ), await this.haClient.send({
         type: lE,
         model_bindings: t.model_bindings
       });
@@ -12230,7 +12245,11 @@ class or {
       }
       return this.document = t, this.documentsByModel.set(this.activeModelFile, this.document), this.isLoaded = !0, this.emitChanged(), this.document;
     } catch (n) {
-      return this.logger.warn("Binding", "HTTP import failed, falling back to websocket saveDocument", n), this.saveDocument(t);
+      return this.logger.warn(
+        "Binding",
+        "HTTP import failed, falling back to websocket saveDocument",
+        n
+      ), this.saveDocument(t);
     }
   }
   async deleteBinding(e) {
@@ -12241,7 +12260,10 @@ class or {
     }).catch(async (n) => {
       if (!this.isUnknownCommandError(n))
         throw n;
-      return this.logger.warn("Binding", "delete_binding unavailable, falling back to save_binding_config null payload"), this.haClient.send({
+      return this.logger.warn(
+        "Binding",
+        "delete_binding unavailable, falling back to save_binding_config null payload"
+      ), this.haClient.send({
         type: Ey,
         model_file: this.activeModelFile,
         object_id: this.normalizeObjectId(e),
@@ -53780,7 +53802,10 @@ function R5(s) {
   return e?.entity_id ? e.entity_id : y5.findByModelObject(s)?.entityId ?? null;
 }
 function y0(s) {
-  return s.replace(/(_power|_energy|_current|_voltage|_temperature|_humidity|_presence|_illuminance|_battery)$/i, "").trim();
+  return s.replace(
+    /(_power|_energy|_current|_voltage|_temperature|_humidity|_presence|_illuminance|_battery)$/i,
+    ""
+  ).trim();
 }
 function I5(s, e, t) {
   if (og.canToggleEntity(s))
@@ -53856,7 +53881,9 @@ function O5(s, e) {
   return e ? C5(e, n, i) ? "active" : "inactive" : "unknown";
 }
 function P5() {
-  const s = Nt((R) => R.selectedIconObjectTypes), e = Nt((R) => R.isEditMode), t = Nt((R) => R.selectedDeviceSubtypeFilters), [n, i] = K.useState([]), [a, c] = K.useState(null), [d, h] = K.useState({}), [p, v] = K.useState({}), [y, b] = K.useState({}), [S, E] = K.useState({}), C = K.useCallback(async () => {
+  const s = Nt((R) => R.selectedIconObjectTypes), e = Nt((R) => R.isEditMode), t = Nt((R) => R.selectedDeviceSubtypeFilters), [n, i] = K.useState([]), [a, c] = K.useState(null), [d, h] = K.useState({}), [p, v] = K.useState({}), [y, b] = K.useState(
+    {}
+  ), [S, E] = K.useState({}), C = K.useCallback(async () => {
     await Zc.ensureLoaded().catch(() => {
     });
     const R = new q(), I = [];
@@ -53922,81 +53949,87 @@ function P5() {
       to.unsubscribe("entity_changed", R), to.unsubscribe("entities_loaded", I), to.unsubscribe("connected", P), B();
     };
   }, [C]);
-  const M = K.useCallback(async (R) => {
-    if (R.actionEntityId) {
-      h((I) => I[R.actionEntityId] ? I : {
-        ...I,
-        [R.actionEntityId]: !0
-      });
-      try {
-        await og.toggleOnOffEntity(R.actionEntityId, R.actionState), await C();
-      } catch (I) {
-        console.error("[DeviceStatusLayer] Failed to toggle device entity", {
-          entityId: R.actionEntityId,
-          error: I
+  const M = K.useCallback(
+    async (R) => {
+      if (R.actionEntityId) {
+        h((I) => I[R.actionEntityId] ? I : {
+          ...I,
+          [R.actionEntityId]: !0
         });
-      } finally {
-        h((I) => {
-          if (!I[R.actionEntityId])
-            return I;
-          const P = { ...I };
-          return delete P[R.actionEntityId], P;
-        });
+        try {
+          await og.toggleOnOffEntity(R.actionEntityId, R.actionState), await C();
+        } catch (I) {
+          console.error("[DeviceStatusLayer] Failed to toggle device entity", {
+            entityId: R.actionEntityId,
+            error: I
+          });
+        } finally {
+          h((I) => {
+            if (!I[R.actionEntityId])
+              return I;
+            const P = { ...I };
+            return delete P[R.actionEntityId], P;
+          });
+        }
       }
-    }
-  }, [C]), D = K.useCallback(async (R) => {
-    if (!R.actionEntityId)
-      return;
-    const I = p[R.deviceId]?.trim() ?? "";
-    if (!I) {
-      b((P) => ({
-        ...P,
-        [R.deviceId]: "Digite a senha para executar a acao."
-      }));
-      return;
-    }
-    E((P) => ({
-      ...P,
-      [R.deviceId]: !0
-    }));
-    try {
-      const P = await to.send({
-        type: "home3d/verify_admin_password",
-        password: I
-      });
-      if (!P.configured) {
-        b((B) => ({
-          ...B,
-          [R.deviceId]: "Senha de administrador nao configurada."
+    },
+    [C]
+  ), D = K.useCallback(
+    async (R) => {
+      if (!R.actionEntityId)
+        return;
+      const I = p[R.deviceId]?.trim() ?? "";
+      if (!I) {
+        b((P) => ({
+          ...P,
+          [R.deviceId]: "Digite a senha para executar a acao."
         }));
         return;
       }
-      if (!P.valid) {
-        b((B) => ({
-          ...B,
-          [R.deviceId]: "Senha invalida."
-        }));
-        return;
-      }
-      b((B) => ({
-        ...B,
-        [R.deviceId]: ""
-      })), v((B) => ({
-        ...B,
-        [R.deviceId]: ""
-      })), await M(R);
-    } catch {
-      b((P) => ({
-        ...P,
-        [R.deviceId]: "Falha ao validar a senha."
-      }));
-    } finally {
       E((P) => ({
         ...P,
-        [R.deviceId]: !1
+        [R.deviceId]: !0
       }));
-    }
-  }, [M, p]);
+      try {
+        const P = await to.send({
+          type: "home3d/verify_admin_password",
+          password: I
+        });
+        if (!P.configured) {
+          b((B) => ({
+            ...B,
+            [R.deviceId]: "Senha de administrador nao configurada."
+          }));
+          return;
+        }
+        if (!P.valid) {
+          b((B) => ({
+            ...B,
+            [R.deviceId]: "Senha invalida."
+          }));
+          return;
+        }
+        b((B) => ({
+          ...B,
+          [R.deviceId]: ""
+        })), v((B) => ({
+          ...B,
+          [R.deviceId]: ""
+        })), await M(R);
+      } catch {
+        b((P) => ({
+          ...P,
+          [R.deviceId]: "Falha ao validar a senha."
+        }));
+      } finally {
+        E((P) => ({
+          ...P,
+          [R.deviceId]: !1
+        }));
+      }
+    },
+    [M, p]
+  );
   return /* @__PURE__ */ L.jsx(L.Fragment, { children: w ? n.map((R) => /* @__PURE__ */ L.jsx(
     wa,
     {
@@ -54022,94 +54055,111 @@ function P5() {
                 title: `${R.entityId} (${R.iconKey})`,
                 "aria-label": `Detalhes do dispositivo ${R.entityName}`,
                 onClick: (I) => {
-                  I.stopPropagation(), c((P) => P === R.deviceId ? null : R.deviceId);
+                  I.stopPropagation(), c(
+                    (P) => P === R.deviceId ? null : R.deviceId
+                  );
                 },
                 children: /* @__PURE__ */ L.jsx("svg", { viewBox: "0 0 24 24", "aria-hidden": "true", focusable: "false", children: /* @__PURE__ */ L.jsx("path", { d: _5[R.iconKey] }) })
               }
             ),
-            a === R.deviceId ? /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup", role: "dialog", "aria-label": `Detalhes de ${R.entityName}`, children: [
-              /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-header", children: [
-                /* @__PURE__ */ L.jsx("strong", { children: R.entityName }),
-                /* @__PURE__ */ L.jsx(
-                  "button",
-                  {
-                    type: "button",
-                    className: "device-status-popup-close",
-                    onClick: (I) => {
-                      I.stopPropagation(), c(null);
+            a === R.deviceId ? /* @__PURE__ */ L.jsxs(
+              "div",
+              {
+                className: "device-status-popup",
+                role: "dialog",
+                "aria-label": `Detalhes de ${R.entityName}`,
+                children: [
+                  /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-header", children: [
+                    /* @__PURE__ */ L.jsx("strong", { children: R.entityName }),
+                    /* @__PURE__ */ L.jsx(
+                      "button",
+                      {
+                        type: "button",
+                        className: "device-status-popup-close",
+                        onClick: (I) => {
+                          I.stopPropagation(), c(null);
+                        },
+                        children: "x"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-subtitle", children: [
+                    "Subtipo: ",
+                    R.subtypeLabel
+                  ] }),
+                  /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-row", children: [
+                    /* @__PURE__ */ L.jsx("span", { children: "Entidade principal:" }),
+                    /* @__PURE__ */ L.jsx("span", { children: R.entityId })
+                  ] }),
+                  /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-row", children: [
+                    /* @__PURE__ */ L.jsx("span", { children: "Estado atual:" }),
+                    /* @__PURE__ */ L.jsx("span", { children: R.entityState })
+                  ] }),
+                  /* @__PURE__ */ L.jsx("div", { className: "device-status-popup-actions", children: R.actionLockMode === "sim" ? /* @__PURE__ */ L.jsx("span", { className: "device-status-popup-action-disabled", children: "Acao bloqueada para este dispositivo." }) : R.actionLockMode === "senha" ? /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-password", children: [
+                    /* @__PURE__ */ L.jsx(
+                      "input",
+                      {
+                        type: "password",
+                        value: p[R.deviceId] ?? "",
+                        placeholder: "Senha para executar acao",
+                        onChange: (I) => {
+                          const P = I.currentTarget.value;
+                          v((B) => ({
+                            ...B,
+                            [R.deviceId]: P
+                          })), b((B) => ({
+                            ...B,
+                            [R.deviceId]: ""
+                          }));
+                        },
+                        onClick: (I) => I.stopPropagation()
+                      }
+                    ),
+                    /* @__PURE__ */ L.jsx(
+                      "button",
+                      {
+                        type: "button",
+                        className: "device-status-popup-action",
+                        disabled: !!S[R.deviceId] || !!d[R.actionEntityId ?? ""],
+                        onClick: (I) => {
+                          I.stopPropagation(), D(R);
+                        },
+                        children: S[R.deviceId] ? "Validando..." : d[R.actionEntityId ?? ""] ? "Executando..." : R.actionState === "on" ? "Validar senha e desativar" : "Validar senha e ativar"
+                      }
+                    ),
+                    y[R.deviceId] ? /* @__PURE__ */ L.jsx("span", { className: "device-status-popup-action-disabled", children: y[R.deviceId] }) : null
+                  ] }) : R.actionEntityId ? /* @__PURE__ */ L.jsx(
+                    "button",
+                    {
+                      type: "button",
+                      className: `device-status-popup-action ${d[R.actionEntityId] ? "pending" : R.actionState === "on" ? "deactivate" : "activate"}`,
+                      disabled: !!d[R.actionEntityId],
+                      onClick: (I) => {
+                        I.stopPropagation(), M(R);
+                      },
+                      children: d[R.actionEntityId] ? "Executando..." : R.actionState === "on" ? "Desativar dispositivo" : "Ativar dispositivo"
+                    }
+                  ) : /* @__PURE__ */ L.jsx("span", { className: "device-status-popup-action-disabled", children: "Acao indisponivel para este tipo de entidade." }) }),
+                  R.popupFields.length > 0 ? R.popupFields.map((I) => /* @__PURE__ */ L.jsxs(
+                    "div",
+                    {
+                      className: "device-status-popup-row",
+                      children: [
+                        /* @__PURE__ */ L.jsxs("span", { children: [
+                          I.label,
+                          ":"
+                        ] }),
+                        /* @__PURE__ */ L.jsx("span", { children: I.entityId ? I.entityName ? `${I.entityName} (${I.state ?? "sem estado"})` : `${I.entityId} (${I.state ?? "sem estado"})` : "Nao configurado" })
+                      ]
                     },
-                    children: "x"
-                  }
-                )
-              ] }),
-              /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-subtitle", children: [
-                "Subtipo: ",
-                R.subtypeLabel
-              ] }),
-              /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-row", children: [
-                /* @__PURE__ */ L.jsx("span", { children: "Entidade principal:" }),
-                /* @__PURE__ */ L.jsx("span", { children: R.entityId })
-              ] }),
-              /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-row", children: [
-                /* @__PURE__ */ L.jsx("span", { children: "Estado atual:" }),
-                /* @__PURE__ */ L.jsx("span", { children: R.entityState })
-              ] }),
-              /* @__PURE__ */ L.jsx("div", { className: "device-status-popup-actions", children: R.actionLockMode === "sim" ? /* @__PURE__ */ L.jsx("span", { className: "device-status-popup-action-disabled", children: "Acao bloqueada para este dispositivo." }) : R.actionLockMode === "senha" ? /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-password", children: [
-                /* @__PURE__ */ L.jsx(
-                  "input",
-                  {
-                    type: "password",
-                    value: p[R.deviceId] ?? "",
-                    placeholder: "Senha para executar acao",
-                    onChange: (I) => {
-                      const P = I.currentTarget.value;
-                      v((B) => ({
-                        ...B,
-                        [R.deviceId]: P
-                      })), b((B) => ({
-                        ...B,
-                        [R.deviceId]: ""
-                      }));
-                    },
-                    onClick: (I) => I.stopPropagation()
-                  }
-                ),
-                /* @__PURE__ */ L.jsx(
-                  "button",
-                  {
-                    type: "button",
-                    className: "device-status-popup-action",
-                    disabled: !!S[R.deviceId] || !!d[R.actionEntityId ?? ""],
-                    onClick: (I) => {
-                      I.stopPropagation(), D(R);
-                    },
-                    children: S[R.deviceId] ? "Validando..." : d[R.actionEntityId ?? ""] ? "Executando..." : R.actionState === "on" ? "Validar senha e desativar" : "Validar senha e ativar"
-                  }
-                ),
-                y[R.deviceId] ? /* @__PURE__ */ L.jsx("span", { className: "device-status-popup-action-disabled", children: y[R.deviceId] }) : null
-              ] }) : R.actionEntityId ? /* @__PURE__ */ L.jsx(
-                "button",
-                {
-                  type: "button",
-                  className: `device-status-popup-action ${d[R.actionEntityId] ? "pending" : R.actionState === "on" ? "deactivate" : "activate"}`,
-                  disabled: !!d[R.actionEntityId],
-                  onClick: (I) => {
-                    I.stopPropagation(), M(R);
-                  },
-                  children: d[R.actionEntityId] ? "Executando..." : R.actionState === "on" ? "Desativar dispositivo" : "Ativar dispositivo"
-                }
-              ) : /* @__PURE__ */ L.jsx("span", { className: "device-status-popup-action-disabled", children: "Acao indisponivel para este tipo de entidade." }) }),
-              R.popupFields.length > 0 ? R.popupFields.map((I) => /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-row", children: [
-                /* @__PURE__ */ L.jsxs("span", { children: [
-                  I.label,
-                  ":"
-                ] }),
-                /* @__PURE__ */ L.jsx("span", { children: I.entityId ? I.entityName ? `${I.entityName} (${I.state ?? "sem estado"})` : `${I.entityId} (${I.state ?? "sem estado"})` : "Nao configurado" })
-              ] }, `${R.deviceId}-${I.label}`)) : /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-row", children: [
-                /* @__PURE__ */ L.jsx("span", { children: "Relacionados:" }),
-                /* @__PURE__ */ L.jsx("span", { children: "Sem campos para este subtipo." })
-              ] })
-            ] }) : null
+                    `${R.deviceId}-${I.label}`
+                  )) : /* @__PURE__ */ L.jsxs("div", { className: "device-status-popup-row", children: [
+                    /* @__PURE__ */ L.jsx("span", { children: "Relacionados:" }),
+                    /* @__PURE__ */ L.jsx("span", { children: "Sem campos para este subtipo." })
+                  ] })
+                ]
+              }
+            ) : null
           ]
         }
       )
@@ -57574,8 +57624,16 @@ function H6() {
       return null;
     const e = JSON.parse(s);
     return !Array.isArray(e.position) || e.position.length !== 3 || !Array.isArray(e.target) || e.target.length !== 3 || typeof e.zoom != "number" ? null : {
-      position: [Number(e.position[0]), Number(e.position[1]), Number(e.position[2])],
-      target: [Number(e.target[0]), Number(e.target[1]), Number(e.target[2])],
+      position: [
+        Number(e.position[0]),
+        Number(e.position[1]),
+        Number(e.position[2])
+      ],
+      target: [
+        Number(e.target[0]),
+        Number(e.target[1]),
+        Number(e.target[2])
+      ],
       zoom: Number(e.zoom)
     };
   } catch {
@@ -57586,7 +57644,10 @@ function V6(s) {
   typeof window > "u" || window.localStorage.setItem(n3, JSON.stringify(s));
 }
 const Eb = oc();
-function i3({ title: s, description: e }) {
+function i3({
+  title: s,
+  description: e
+}) {
   return /* @__PURE__ */ L.jsx(wa, { center: !0, position: [0, 1.8, 0], children: /* @__PURE__ */ L.jsxs(
     "div",
     {
@@ -57640,11 +57701,11 @@ function j6({ modelRef: s, controlsRef: e }) {
       return;
     const i = H6();
     if (i) {
-      t.position.set(i.position[0], i.position[1], i.position[2]), t.zoom = i.zoom, t.updateProjectionMatrix(), e.current && (e.current.target.set(i.target[0], i.target[1], i.target[2]), e.current.update()), t.lookAt(
+      t.position.set(i.position[0], i.position[1], i.position[2]), t.zoom = i.zoom, t.updateProjectionMatrix(), e.current && (e.current.target.set(
         i.target[0],
         i.target[1],
         i.target[2]
-      );
+      ), e.current.update()), t.lookAt(i.target[0], i.target[1], i.target[2]);
       return;
     }
     s.current.updateWorldMatrix(!0, !0);
@@ -57665,27 +57726,39 @@ function j6({ modelRef: s, controlsRef: e }) {
   }, [t, e, s, n.width, n.height]), null;
 }
 function W6() {
-  const s = K.useRef(null), e = K.useRef(null), t = Nt((b) => b.activeModelFile), n = new q(0, 1, 0), [i, a] = K.useState(!1), c = K.useCallback((b) => {
-    const S = e.current, E = S?.object;
-    !S || !(E instanceof Kn) || (b(S, E), E.updateProjectionMatrix(), S.update());
-  }, []), d = K.useCallback((b) => {
-    c((S, E) => {
-      const C = E.position.clone().sub(S.target), w = Math.min(80, Math.max(1.8, C.length() * b));
-      C.setLength(w), E.position.copy(S.target).add(C), E.lookAt(S.target);
-    });
-  }, [c]), h = K.useCallback((b) => {
-    c((S, E) => {
-      const C = E.position.clone().sub(S.target);
-      C.applyAxisAngle(n, b), E.position.copy(S.target).add(C), E.lookAt(S.target);
-    });
-  }, [c]), p = K.useCallback((b, S) => {
-    c((E, C) => {
-      const w = new q();
-      C.getWorldDirection(w), w.y = 0, w.lengthSq() < 1e-4 ? w.set(0, 0, -1) : w.normalize();
-      const M = new q().crossVectors(w, n).normalize(), D = w.multiplyScalar(b).add(M.multiplyScalar(S));
-      C.position.add(D), E.target.add(D), C.lookAt(E.target);
-    });
-  }, [c]), v = K.useCallback(() => {
+  const s = K.useRef(null), e = K.useRef(null), t = Nt((b) => b.activeModelFile), n = new q(0, 1, 0), [i, a] = K.useState(!1), c = K.useCallback(
+    (b) => {
+      const S = e.current, E = S?.object;
+      !S || !(E instanceof Kn) || (b(S, E), E.updateProjectionMatrix(), S.update());
+    },
+    []
+  ), d = K.useCallback(
+    (b) => {
+      c((S, E) => {
+        const C = E.position.clone().sub(S.target), w = Math.min(80, Math.max(1.8, C.length() * b));
+        C.setLength(w), E.position.copy(S.target).add(C), E.lookAt(S.target);
+      });
+    },
+    [c]
+  ), h = K.useCallback(
+    (b) => {
+      c((S, E) => {
+        const C = E.position.clone().sub(S.target);
+        C.applyAxisAngle(n, b), E.position.copy(S.target).add(C), E.lookAt(S.target);
+      });
+    },
+    [c]
+  ), p = K.useCallback(
+    (b, S) => {
+      c((E, C) => {
+        const w = new q();
+        C.getWorldDirection(w), w.y = 0, w.lengthSq() < 1e-4 ? w.set(0, 0, -1) : w.normalize();
+        const M = new q().crossVectors(w, n).normalize(), D = w.multiplyScalar(b).add(M.multiplyScalar(S));
+        C.position.add(D), E.target.add(D), C.lookAt(E.target);
+      });
+    },
+    [c]
+  ), v = K.useCallback(() => {
     const b = e.current, S = b?.object;
     !b || !(S instanceof Kn) || V6({
       position: [S.position.x, S.position.y, S.position.z],
@@ -57746,7 +57819,17 @@ function W6() {
               ]
             }
           ) }, t),
-          /* @__PURE__ */ L.jsx(qF, { ref: e, makeDefault: !0, enablePan: !0, enableZoom: !0, enableRotate: !0, onEnd: y })
+          /* @__PURE__ */ L.jsx(
+            qF,
+            {
+              ref: e,
+              makeDefault: !0,
+              enablePan: !0,
+              enableZoom: !0,
+              enableRotate: !0,
+              onEnd: y
+            }
+          )
         ]
       }
     ),
@@ -57769,22 +57852,69 @@ function W6() {
           /* @__PURE__ */ L.jsxs("div", { className: "navigation-controls-content", children: [
             /* @__PURE__ */ L.jsxs("div", { className: "navigation-controls-main", children: [
               /* @__PURE__ */ L.jsxs("div", { className: "navigation-controls-group navigation-direction", "aria-label": "Direcao", children: [
-                /* @__PURE__ */ L.jsx("button", { type: "button", onClick: () => p(0, -1.1), "aria-label": "Mover para esquerda", children: "←" }),
-                /* @__PURE__ */ L.jsxs("div", { className: "navigation-controls-group navigation-controls-vertical", "aria-label": "Frente e tras", children: [
-                  /* @__PURE__ */ L.jsx("button", { type: "button", onClick: () => p(1.1, 0), "aria-label": "Mover para frente", children: "↑" }),
-                  /* @__PURE__ */ L.jsx("button", { type: "button", onClick: () => p(-1.1, 0), "aria-label": "Mover para tras", children: "↓" })
-                ] }),
+                /* @__PURE__ */ L.jsx(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: () => p(0, -1.1),
+                    "aria-label": "Mover para esquerda",
+                    children: "←"
+                  }
+                ),
+                /* @__PURE__ */ L.jsxs(
+                  "div",
+                  {
+                    className: "navigation-controls-group navigation-controls-vertical",
+                    "aria-label": "Frente e tras",
+                    children: [
+                      /* @__PURE__ */ L.jsx("button", { type: "button", onClick: () => p(1.1, 0), "aria-label": "Mover para frente", children: "↑" }),
+                      /* @__PURE__ */ L.jsx("button", { type: "button", onClick: () => p(-1.1, 0), "aria-label": "Mover para tras", children: "↓" })
+                    ]
+                  }
+                ),
                 /* @__PURE__ */ L.jsx("button", { type: "button", onClick: () => p(0, 1.1), "aria-label": "Mover para direita", children: "→" })
               ] }),
-              /* @__PURE__ */ L.jsxs("div", { className: "navigation-controls-group navigation-controls-compact", "aria-label": "Rotacao", children: [
-                /* @__PURE__ */ L.jsx("button", { type: "button", onClick: () => h(Math.PI / 14), "aria-label": "Rotacionar para esquerda", children: "⟲" }),
-                /* @__PURE__ */ L.jsx("button", { type: "button", onClick: () => h(-Math.PI / 14), "aria-label": "Rotacionar para direita", children: "⟳" })
-              ] })
+              /* @__PURE__ */ L.jsxs(
+                "div",
+                {
+                  className: "navigation-controls-group navigation-controls-compact",
+                  "aria-label": "Rotacao",
+                  children: [
+                    /* @__PURE__ */ L.jsx(
+                      "button",
+                      {
+                        type: "button",
+                        onClick: () => h(Math.PI / 14),
+                        "aria-label": "Rotacionar para esquerda",
+                        children: "⟲"
+                      }
+                    ),
+                    /* @__PURE__ */ L.jsx(
+                      "button",
+                      {
+                        type: "button",
+                        onClick: () => h(-Math.PI / 14),
+                        "aria-label": "Rotacionar para direita",
+                        children: "⟳"
+                      }
+                    )
+                  ]
+                }
+              )
             ] }),
             /* @__PURE__ */ L.jsxs("div", { className: "navigation-controls-zoom", "aria-label": "Zoom", children: [
               /* @__PURE__ */ L.jsx("button", { type: "button", onClick: () => d(0.88), "aria-label": "Aproximar", children: "Aproximar ＋" }),
               /* @__PURE__ */ L.jsx("button", { type: "button", onClick: () => d(1.14), "aria-label": "Afastar", children: "Afastar －" }),
-              /* @__PURE__ */ L.jsx("button", { type: "button", className: "navigation-controls-save", onClick: v, "aria-label": "Salvar vista atual", children: "Salvar vista" })
+              /* @__PURE__ */ L.jsx(
+                "button",
+                {
+                  type: "button",
+                  className: "navigation-controls-save",
+                  onClick: v,
+                  "aria-label": "Salvar vista atual",
+                  children: "Salvar vista"
+                }
+              )
             ] })
           ] })
         ]
